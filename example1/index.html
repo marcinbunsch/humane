@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Humane</title>
+
+    <script type="text/javascript" src="../js/prototype.js"></script>
+    <script type="text/javascript" src="../js/humane.js"></script>
+    <script type="text/javascript" src="../js/humane/central.js"></script>
+    <script type="text/javascript" src="../js/humane/adapter.js"></script>
+    <script type="text/javascript" src="../js/humane/adapter/prototype.js"></script>
+    <script type="text/javascript" src="../js/humane/ajax.js"></script>
+    <script type="text/javascript" src="../js/humane/ajax/callbacks.js"></script>
+    <script type="text/javascript" src="../js/humane/handler.js"></script>
+    <script type="text/javascript" src="../js/humane/handler/core.js"></script>
+    <script type="text/javascript" src="../js/humane/handler/attributes.js"></script>
+    <script type="text/javascript" src="../js/humane/handler/dom.js"></script>
+    <script type="text/javascript" src="../js/humane/handler/ajax.js"></script>
+    <script type="text/javascript" src="../js/humane/handler/effects.js"></script>
+
+ 
+  </head>
+  <body>
+  
+    <a href="#" id="clickable">Click Me</a> or <a href="#" id="clickable2">Click Me</a>
+    
+    <div id="request_result"></div>
+    
+    <div id="result">Click Me/Hover me</div>
+    
+    <script type="text/javascript">
+
+// Prototype version
+// /*
+Event.observe($('clickable'), 'mouseover', function() { 
+  if (!this._original) this._original = this.innerHTML; 
+  this.update('hovered'); 
+});
+Event.observe($('clickable'), 'mouseout', function() { 
+  this.update(this._original); 
+});
+Event.observe($('clickable'), 'click', function() {
+  $('request_result').update('Fetching...');
+  new Ajax.Request('/example1/ajax.txt', {
+     method: 'get',
+     onSuccess: function(transport) {
+       alert('Request went ok!')
+       $('request_result').update('Success');
+       $('result').update(transport.responseText)
+     },
+     onFailure: function(transport) {
+       alert('error')
+       $('request_result').update('Failed');
+     }
+   });
+});
+Event.observe($('clickable2'), 'click', function() {
+  $('request_result').update('Fetching...');
+  new Ajax.Request('/nonexistingurl.txt', {
+     method: 'get',
+     onFailure: function(transport) {
+       alert('boo')
+       $('request_result').update('Failed');
+     }
+   });
+});
+// /*
+
+// Humane version
+/*
+when('#clickable').is_hovered.
+  update('hovered').
+when.is_clicked.
+  update('request_result', 'Fetching...').
+  fetch('/example/ajax.txt').
+  into('result').
+    when.the_request_succeeds.
+      alert('Request went ok!').and.
+      update('request_result', 'Success!').         
+    when.the_request_fails.
+      update('request_result', 'Failed!').
+      alert('error').
+when.is_dehovered.
+  revert()
+  
+when('#clickable2').is_clicked.
+  update('request_result', 'Fetching...').
+  get('nonexistingurl').
+    when.the_request_fails.
+      alert('boo').
+      update('request_result', 'Failed!')
+*/
+
+/*  
+when('#clickable').is_hovered.
+  update('hovered').
+when.is_clicked.
+  change_content_of_to('request_result', 'Fetching...').
+  fetch('/example/ajax.txt').
+  into('result').
+    when.the_request_succeeds.
+      alert('Request went ok!').and.
+      update('request_result', 'Success!').         
+    when.the_request_fails.
+      update('request_result', 'Failed!').
+      alert('error').
+when.is_dehovered.
+  revert()
+  
+    // When I hover '#clickable'
+    when('#clickable').is_hovered.
+      // It should change content to 'hovered'
+      update('hovered').
+    // When I click it
+    when.is_clicked.
+      // Let the user know that we're making a request
+      change_content_of_to('request_result', 'Fetching...').
+      // It should fetch '/example/ajax.txt
+      fetch('/example/ajax.txt').
+      // into '#result'
+      into('result').
+        // If the request is successful
+        when.the_request_succeeds.
+          // Should alert 'foo'
+          alert('Request went ok!').and.
+          // Should change content of '#clickable2' to 'changed
+          update('request_result', 'Success!').         
+        // If the request fails
+        when.the_request_fails.
+          // Let the user know it failed
+          update('request_result', 'Failed!').
+          // Should alert 'error'
+          alert('error').
+    // When I dehover it 
+    when.is_dehovered.
+      // It should change content to original
+      revert()
+  
+    // When I click '#clickable'
+    when('#clickable2').is_clicked.
+      // Let the user know that we're making a request
+      change_content_of_to('request_result', 'Fetching...').
+      // make a request for a url that is not there
+      get('nonexistingurl').
+        // it will throw an error
+        when.the_request_fails.
+          // And we handle it with a helpful message
+          alert('boo').
+          // Let the user know it failed        
+          change_content_of_to('request_result', 'Failed!')
+*/  
+    </script>
+  </body>
+</html>
