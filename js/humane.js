@@ -2,13 +2,19 @@ var Humane = {}
 
 function when(id) {
   object = $$(id);
-  if (object.constructor === Array && object.length == 1) { object = object[0]; }
+  if (object.constructor !== Array) { object = [object]; }
   if (!object) { return null; }
   // create one central per object
   if (!object._humane_central) object._humane_central = new Humane.Central(object);
   return object._humane_central;
 }
 
+function take(id) {
+  object = $(id)
+  if (!object) return null;
+  if (!object._humane_shortcuts) object._humane_shortcuts = new Humane.Shortcuts(object);
+  return object._humane_shortcuts;
+}
 //when(something). is_clicked.change_content_to('Loading').and.fetch('/robots.txt').into('result').and.release() 
 
 //

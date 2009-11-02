@@ -23,11 +23,14 @@ Humane.Handler.Attributes = {
   change_content_to: function(content) { 
     this._store_original('innerHTML')
     var that = this
-    return this.attach(function() { 
-      return_val = content
-      if (typeof(content) == 'function') { return_val = content(this._element) }
-      that._element.update(return_val) 
-    })
+    that._element.invoke(function(item) {    
+      that.attach(function() { 
+        return_val = content
+        if (typeof(content) == 'function') { return_val = content(item) }
+        item.update(return_val)   
+      })
+    });
+    return this;
   },
   change_content_of_to: function(id, content) { 
     return this.attach(function() { 

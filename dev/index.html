@@ -4,7 +4,33 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>Humane</title>
-
+    
+    <style type="text/css">
+    /* reset.css */
+    html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+    body {line-height:1.5;}
+    table {border-collapse:separate;border-spacing:0;}
+    caption, th, td {text-align:left;font-weight:normal;}
+    table, td, th {vertical-align:middle;}
+    blockquote:before, blockquote:after, q:before, q:after {content:"";}
+    blockquote, q {quotes:"" "";}
+    a img {border:none;}
+    /* */
+    body { font-family: sans-serif; font-size: 90%; background-color: #333; color:#fff;}
+    a { color: inherit;}
+    .content { width: 800px; margin: 0 auto;}
+    #example_one { display:none; }
+    #example_search {  }
+    #search_field {
+      width: 100%;
+      border: 0;
+      padding: 5px;
+      font-size: 120%;
+      color: #333;
+    }
+    .preloader { text-align:center; display: block; padding: 20px; }  
+    .preloader .label { font-size: 130%; display: block; margin-top: 10px;}
+    </style>
     <script type="text/javascript" src="../js/prototype.js"></script>
     <script type="text/javascript" src="../js/humane.js"></script>
     <script type="text/javascript" src="../js/humane/central.js"></script>
@@ -18,61 +44,30 @@
     <script type="text/javascript" src="../js/humane/handler/dom.js"></script>
     <script type="text/javascript" src="../js/humane/handler/ajax.js"></script>
     <script type="text/javascript" src="../js/humane/handler/effects.js"></script>
-
+    <script type="text/javascript" src="../js/humane/handler/forms.js"></script>
+    <script type="text/javascript" src="../js/humane/shortcuts.js"></script>
+    <script type="text/javascript" src="dev_clicks.js"></script>
+    <script type="text/javascript" src="dev_search.js"></script>
  
   </head>
   <body>
-  
-    <a href="#" id="clickable">Click Me</a> or <a href="#" id="clickable2">Click Me</a>
-    
-    <div id="request_result"></div>
-    
-    <div id="result">Click Me/Hover me</div>
-    
+    <div class="content">
+      <div id="example_one" class="example">
+        <a href="#" id="clickable">Click Me</a> or <a href="#" id="clickable2">Click Me</a>
+        <div id="request_result"></div>    
+        <div id="result">Click Me/Hover me</div>
+      </div>
+    </div>
+    <div class="content">
+      <form id="example_search_form" action="/foo">
+        <div id="example_search" class="example">
+          <input type="text" id="search_field" />
+          <div id="results"></div>
+        </div>
+      </form>
+    </div>
     <script type="text/javascript">
-   
-    // When I hover '#clickable'
-    when('#clickable').is_hovered.
-      // It should change content to 'hovered'
-      update('hovered').
-    // When I click it
-    when.is_clicked.
-      // Let the user know that we're making a request
-      update('request_result', 'Fetching...').
-      // It should fetch '/example/ajax.txt
-      fetch('/dev/ajax.txt').
-      // into '#result'
-      into('result').
-        // If the request is successful
-        when.the_request_succeeds.
-          // Should alert 'foo'
-          alert('Request went ok!').and.
-          // Should change content of '#clickable2' to 'changed
-          update('request_result', 'Success').         
-        // If the request fails
-        when.the_request_fails.
-          // Let the user know it failed
-          update('request_result', 'Failed!').
-          // Should alert 'error'
-          alert('Failed').
-    // When I dehover it 
-    when.is_dehovered.
-      // It should change content to original
-      revert()
-  
-    // When I click '#clickable'
-    when('#clickable2').is_clicked.
-      // Let the user know that we're making a request
-      update('request_result', 'Fetching...').
-      // make a request for a url that is not there
-      get('nonexistingurl').
-        // it will throw an error
-        when.the_request_fails.
-          // And we handle it with a helpful message
-          alert('boo').
-          // Let the user know it failed        
-          update('request_result', 'Failed!')
 
-    </script>
+    </script
   </body>
 </html>
