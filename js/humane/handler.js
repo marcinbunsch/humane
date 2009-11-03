@@ -36,32 +36,41 @@ Humane.Handler = function(central, collection, type) {
     return this;          
   };
   // attr
-  this._update = function(selector_or_content, content) {
+  this._update = function(update_selector_or_content, content) {
     var self = this
-    if (!content) {
-//      if (!this._originals) this._originals = {};
-//      if (!this._originals.innerHTML) this._originals.innerHTML = this.innerHTML;
-      this.update(selector_or_content);
-    } else {
-      if (selector_or_content.constructor === String) {
-        selector_or_content = $$(selector_or_content)
-      }        
-      selector_or_content.each(function(item) {
-        return_val = content
-        if (self._is_function(content)) return_val = content(item)
-        item.update(return_val);
+    if (update_selector_or_content.constructor === Array) {
+      update_selector_or_content.each(function(item) {
+        item.update(content)
       });
-    }
+    } else if (typeof(update_selector_or_content) == 'object') {
+      var item = update_selector_or_content
+      if (!item._originals) item._originals = {};
+      if (!item._originals.innerHTML) item._originals.innerHTML = item.innerHTML;
+      var return_val = content
+      if (self._is_function(content)) return_val = content(item)
+      $(update_selector_or_content).update(return_val)
+    } 
   };
   this.update = function(selector_or_content, content) {
     var self = this;
     return this.attach(function() {
-      self._update(selector_or_content, content);
+      // content not specified, it can be found in selector_or_content, apply it to subject
+      if (!content) {
+        var selector_or_content_for_item = $(this);
+        var content_for_item = selector_or_content;
+      } else {
+      // content and selector specified, use supplied selector
+        var selector_or_content_for_item = $$(selector_or_content);
+        var content_for_item = content;
+      }
+      self._update(selector_or_content_for_item, content_for_item);
     });
   };
   this.restore = function() {
     return this.attach(function() {
-      this.update(this._originals.innerHTML)  ;
+      if (this._originals) {
+        this.update(this._originals.innerHTML);
+      }
     });
   };
   this.alert = function(message) {

@@ -6,14 +6,17 @@ Humane.Ajax.Request = function(url, caller_element) {
   this._request = null;
   this._element = caller_element;
   this._target = caller_element;
+  // add a success callback to request
   this.success = function(callback) {
     this._callbacks['success'].push(callback)
     return this;
   };
+  // add a failure callback to request
   this.failure = function(callback) {
     this._callbacks['failure'].push(callback)
     return this;
   };
+  // private function tu run all callbacks to specified result type
   this._run_callbacks = function(type, transport) {
     if (this._callbacks[type].length > 0) { 
       var self = this;
@@ -23,6 +26,7 @@ Humane.Ajax.Request = function(url, caller_element) {
       });
     }
   };
+  // general method for calling ajax requests
   this.call = function(url, method, parameters) {
     var self = this;
     this._request = new Ajax.Request(this._url, {
@@ -34,13 +38,19 @@ Humane.Ajax.Request = function(url, caller_element) {
     });
     return this;
   }
+  // call this request using get
   this.get = function() {
     var self = this;
     return this.call(this._url, 'get');
   },
+  // call this request using post
   this.post = function(data) {
     var self = this;
-    var serialized = $(this._element.id).serialize()
-    return this.call(this._url, 'post', serialized);
+    var serialized = ''
+    if (this._element.nodeName.toLowerCase() == 'form') {
+      var serialized = $(this._element.id).serialize()
+    }
+    this.call(this._url, 'post', serialized);
+    return this
   }
 }
