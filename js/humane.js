@@ -15,6 +15,9 @@ function take(id) {
   if (!object._humane_shortcuts) object._humane_shortcuts = new Humane.Shortcuts(object);
   return object._humane_shortcuts;
 }
+
+Element.prototype.prepend = function(content) { new Insertion.Before(this, content); };
+
 //when(something). is_clicked.change_content_to('Loading').and.fetch('/robots.txt').into('result').and.release() 
 
 //

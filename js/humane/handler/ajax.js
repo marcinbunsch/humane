@@ -12,7 +12,7 @@ Humane.Handler.Ajax = {
     var self = this;
     return this.each(function() { 
       this._humane_ajax_queue.last().success(function(response) {
-        self.update(this._target, response.responseText)
+        self._update(this._target, response.responseText)
       })
     });
   },

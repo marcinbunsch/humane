@@ -1,5 +1,5 @@
 Humane.Handler.Forms = {
-  preload: function(id, options) {
+  preload: function(selector, options) {
     var preload_opts = {
       content: 'Loading...'
     }
@@ -13,9 +13,9 @@ Humane.Handler.Forms = {
     if (preload_opts.image) preload_html += '<img src="' + preload_opts.image + '" class="preloader_image" alt="' + preload_opts.text + '" />'
     if (preload_opts.text) preload_html += '<span class="label">' + preload_opts.text + '</span>'
     preload_html += '</span>'
-    var that = this
+    var self = this
     return this.attach(function() { 
-      $(id).update(preload_html);
+      self._update(selector, preload_html)
     })
   },
 //  post: function(url) {

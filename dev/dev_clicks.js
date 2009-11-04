@@ -26,9 +26,9 @@ take('clickable2').add_content_flip("C'mon, click me")
 // When I click 'clickable'
 when('#clickable').is_clicked.
   // Update the status div with 'Fetching...'
-  update('request_result', 'Fetching...').
+  update('#request_result', 'Fetching...').
   // Load '/dev/ajax.txt' into 'result' div
-  fetch('/dev/ajax.txt').into('result').
+  fetch('/dev/ajax.txt').into('#result').
   // And prevent the browser from adding a '#' to the url
   and.stop().
     // When the request goes ok
@@ -36,19 +36,19 @@ when('#clickable').is_clicked.
       // Show a box which says 'Request went ok!'    
       alert('Request went ok!').and.
       // And update the status div with 'Success!'
-      update('request_result', 'Success').         
+      update('#request_result', 'Success').         
     // When the request fails, 
     when.the_request_fails.
       // Show a box which says 'Failed'
       alert('Failed').
       // And update the status div with 'Failed!'
-      update('request_result', 'Failed!')
+      update('#request_result', 'Failed!')
 
 
 // When I click '#clickable'
 when('#clickable2').is_clicked.
   // Let the user know that we're making a request
-  update('request_result', 'Fetching...').
+  update('#request_result', 'Fetching...').
   // make a request for a url that is not there
   get('nonexistingurl').
   // do not follow the link that caused the event
@@ -58,6 +58,6 @@ when('#clickable2').is_clicked.
       // And we handle it with a helpful message
       alert('boo').
       // Let the user know it failed        
-      update('request_result', 'Failed!')
+      update('#request_result', 'Failed!')
 
 });
