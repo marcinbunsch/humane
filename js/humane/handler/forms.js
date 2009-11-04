@@ -1,11 +1,10 @@
 Humane.Handler.Forms = {
   preload: function(selector, options) {
-    var preload_opts = {
-      content: 'Loading...'
-    }
-    if (typeof(options) == 'string') {
+    var preload_opts = { content: 'Loading...' }
+    var type = typeof(options)
+    if (type == 'string') {
       preload_opts.text = options 
-    } else if (typeof(options) == 'object') {
+    } else if (type == 'object') {
       preload_opts = options 
     }
     var preload_html = ''
@@ -18,14 +17,6 @@ Humane.Handler.Forms = {
       self._update(selector, preload_html)
     })
   },
-//  post: function(url) {
-//    this._ensure_request_registry()
-//    var that = this._element;
-//    var request = new Humane.Ajax.Request(url, this._element);
-//   request._form = this._element;
-//    this._element._ajax_requests.push(request);
-//    return this.attach(function() { request.post(); });
-//  },
   post: function(url) { 
     var self = this;
     var request_id = 'request_' + Math.random().toString();

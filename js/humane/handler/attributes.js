@@ -41,11 +41,7 @@ Humane.Handler.Attributes = {
     })
   },
   update: function(id_or_content, content) {
-    if (content) {
-      return this.change_content_of_to(id_or_content, content)
-    } else {
-      return this.change_content_to(id_or_content)
-    }
+    return (content ? this.change_content_of_to(id_or_content, content) : this.change_content_to(id_or_content))
   },
   restore_original_content: function() { return this.restore_original('innerHTML') },
   revert: function() { return this.restore_original('innerHTML') },

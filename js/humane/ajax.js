@@ -41,12 +41,12 @@ Humane.Ajax.Request = function(url, caller_element) {
   // call this request using get
   this.get = function() {
     var self = this;
-    return this.call(this._url, 'get');
+    return this.call(this._url, 'get', null);
   },
   // call this request using post
   this.post = function(data) {
     var self = this;
-    var serialized = ''
+    var serialized = null
     if (this._element.nodeName.toLowerCase() == 'form') {
       var serialized = $(this._element.id).serialize()
     }

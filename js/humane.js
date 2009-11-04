@@ -16,7 +16,6 @@ function take(id) {
   return object._humane_shortcuts;
 }
 
-Element.prototype.prepend = function(content) { new Insertion.Before(this, content); };
 
 //when(something). is_clicked.change_content_to('Loading').and.fetch('/robots.txt').into('result').and.release() 
 
