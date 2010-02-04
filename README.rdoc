@@ -1,5 +1,7 @@
 == Humane
 
+NOTE: This project is dead as I'm putting all my effort into other projects instead. Feel free to fork it or use parts of it if you find them useful.
+
 Humane is an experiment aimed at creating a human readable way of handling callback chains in javascript and simplifying the common tasks connected to it. 
 
 Currently this repository is mostly for me to have access to the code on different machines, but if you like it, feel free to fork, send suggestions or fixes/improvements :)
